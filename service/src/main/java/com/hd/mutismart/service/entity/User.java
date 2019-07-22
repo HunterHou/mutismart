@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @Data
 public class User extends BasePageParam {
 
-    @TableId(type = IdType.UUID)
-    private String id;
+    @TableId(type = IdType.NONE)
+    private Long id;
     private String name;
     private Boolean deleteFlag = false;
     private LocalDate birthday;

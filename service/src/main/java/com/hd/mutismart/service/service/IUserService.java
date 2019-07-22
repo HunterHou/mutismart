@@ -15,7 +15,7 @@ public interface IUserService {
 
     ReqResult delete(User user);
 
-    ReqResult delete(List<String> ids);
+    ReqResult delete(List<Long> ids);
 
     IPage<User> queryPage(User user);
 }

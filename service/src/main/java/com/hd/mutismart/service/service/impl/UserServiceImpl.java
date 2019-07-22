@@ -95,7 +95,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ReqResult delete(List<String> ids) {
+    public ReqResult delete(List<Long> ids) {
         userMapper.deleteBatchIds(ids);
         ReqResult result = ReqResult.success();
         result.setIds(ids);

@@ -9,8 +9,8 @@ import java.util.List;
  */
 @Data
 public class ReqResult {
-    private String id;
-    private List<String> ids;
+    private Long id;
+    private List<Long> ids;
     private String code;
     private String message;
     private Object data;
