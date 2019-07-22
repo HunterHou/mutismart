@@ -6,8 +6,8 @@ import java.util.List;
 
 @Data
 public class ReqResult {
-    private Long id;
-    private List<Long> ids;
+    private String id;
+    private List<String> ids;
     private String code;
     private String message;
     private Object data;

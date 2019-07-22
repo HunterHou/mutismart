@@ -9,6 +9,7 @@ import com.hd.mutismart.service.service.IUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -25,9 +26,12 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ReqResult insert(User user) {
+        user.setCreateTime(LocalDate.now());
+        user.setDeleteFlag(false);
         userMapper.insert(user);
         ReqResult result = ReqResult.success();
         result.setId(user.getId());
+        result.setData(user);
         return result;
     }
 
@@ -36,19 +40,22 @@ public class UserServiceImpl implements IUserService {
         userMapper.updateById(user);
         ReqResult result = ReqResult.success();
         result.setId(user.getId());
+        result.setData(user);
         return result;
     }
 
     @Override
-    public ReqResult delete(Long id) {
-        userMapper.deleteById(id);
+    public ReqResult delete(User user) {
+        user.setDeleteFlag(true);
+        user.setDeleteTime(LocalDate.now());
+        userMapper.updateById(user);
         ReqResult result = ReqResult.success();
-        result.setId(id);
+        result.setData(user);
         return result;
     }
 
     @Override
-    public ReqResult delete(List<Long> ids) {
+    public ReqResult delete(List<String> ids) {
         userMapper.deleteBatchIds(ids);
         ReqResult result = ReqResult.success();
         result.setIds(ids);

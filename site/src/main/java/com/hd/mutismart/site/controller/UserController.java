@@ -22,7 +22,8 @@ public class UserController {
 
     @RequestMapping("user/delete")
     public ReqResult delete(User user) {
-        return userService.delete(user.getId());
+
+        return userService.delete(user);
     }
 
     @RequestMapping("user/all")

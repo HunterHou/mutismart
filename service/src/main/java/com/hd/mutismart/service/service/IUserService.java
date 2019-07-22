@@ -12,7 +12,7 @@ public interface IUserService {
 
     ReqResult update(User user);
 
-    ReqResult delete(Long id);
+    ReqResult delete(User user);
 
-    ReqResult delete(List<Long> id);
+    ReqResult delete(List<String> ids);
 }
