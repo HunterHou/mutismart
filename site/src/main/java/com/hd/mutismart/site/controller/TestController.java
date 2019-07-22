@@ -2,6 +2,7 @@ package com.hd.mutismart.site.controller;
 
 import com.hd.mutismart.service.entity.User;
 import com.hd.mutismart.service.mapper.UserMapper;
+import com.hd.mutismart.service.service.IUserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class TestController {
 
     @Resource
-    private UserMapper userMapper;
+    private IUserService userService;
 
     @RequestMapping("test")
     public String test() {
@@ -21,6 +22,6 @@ public class TestController {
 
     @RequestMapping("users")
     public List<User> selectList() {
-        return userMapper.selectList(null);
+        return userService.query();
     }
 }

@@ -15,6 +15,7 @@
         <module>site</module>
         <module>search</module>
         <module>cache</module>
+        <module>base</module>
     </modules>
 
     <parent>
