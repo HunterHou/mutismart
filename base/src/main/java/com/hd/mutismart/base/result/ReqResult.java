@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * @author hunter
+ */
 @Data
 public class ReqResult {
     private String id;

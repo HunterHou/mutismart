@@ -1,5 +1,9 @@
 package com.hd.mutismart.base.result;
 
+/**
+ * @author hunter
+ */
+
 public enum MessageCode {
     SUCCESS("200", "成功"), FAIL("400", "失败");
 
