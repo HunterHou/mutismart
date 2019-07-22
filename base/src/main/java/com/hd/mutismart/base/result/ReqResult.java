@@ -25,4 +25,10 @@ public class ReqResult {
         return new ReqResult(MessageCode.FAIL);
     }
 
+    public static ReqResult fail(String message) {
+        ReqResult reqResult = ReqResult.fail();
+        reqResult.setMessage(message);
+        return reqResult;
+    }
+
 }
