@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @MapperScan(basePackages = {"com.hd.mutismart.*.mapper"})
-@ComponentScan(basePackages = {"com.hd.mutismart.*.service"})
+@ComponentScan(basePackages = {"com.hd.mutismart"})
 public class SiteApplication {
     public static void main(String[] args) {
         SpringApplication.run(SiteApplication.class, args);
