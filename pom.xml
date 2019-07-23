@@ -16,6 +16,7 @@
         <module>search</module>
         <module>cache</module>
         <module>base</module>
+        <module>common</module>
         <module>code-generator</module>
     </modules>
 

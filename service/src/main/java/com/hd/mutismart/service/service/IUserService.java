@@ -1,10 +1,10 @@
 package com.hd.mutismart.service.service;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hd.mutismart.base.result.ReqResult;
 import com.hd.mutismart.service.entity.User;
+
+import java.util.List;
 
 public interface IUserService {
 

@@ -10,6 +10,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>search</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.hd</groupId>
+            <artifactId>service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
