@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.Version;
 import com.hd.mutismart.base.param.BasePageParam;
 
 import lombok.Data;
@@ -23,4 +24,6 @@ public class User extends BasePageParam {
     private String        sex;
     private LocalDateTime createTime;
     private LocalDateTime deleteTime;
+    @Version
+    private Long          version;
 }
