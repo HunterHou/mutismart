@@ -5,14 +5,16 @@ package com.hd.mutismart.base.result;
  */
 
 public enum MessageCode {
-                         SUCCESS("200", "成功"), FAIL("400", "失败");
+                         SUCCESS("200", "成功", true), FAIL("400", "失败", false);
 
-    private String code;
-    private String message;
+    private String  code;
+    private String  message;
+    private Boolean success;
 
-    MessageCode(String code, String message){
+    MessageCode(String code, String message, Boolean success){
         this.code = code;
         this.message = message;
+        this.success = success;
     }
 
     public String getCode() {
@@ -21,5 +23,9 @@ public enum MessageCode {
 
     public String getMessage() {
         return message;
+    }
+
+    public Boolean getSuccess() {
+        return success;
     }
 }

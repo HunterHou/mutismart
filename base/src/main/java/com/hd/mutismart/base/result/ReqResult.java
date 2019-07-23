@@ -10,6 +10,7 @@ import lombok.Data;
 @Data
 public class ReqResult {
 
+    private Boolean    success = true;
     private Long       id;
     private List<Long> ids;
     private String     code;
@@ -22,6 +23,7 @@ public class ReqResult {
     public ReqResult(MessageCode messageCode){
         this.code = messageCode.getCode();
         this.message = messageCode.getMessage();
+        this.success = messageCode.getSuccess();
     }
 
     public static ReqResult success() {

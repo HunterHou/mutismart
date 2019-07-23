@@ -8,9 +8,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hd.mutismart.base.result.ReqResult;
@@ -37,6 +35,10 @@ public class UserServiceImpl implements IUserService {
             queryWrapper.eq(User::getBirthday, user.getBirthday());
         }
         queryWrapper.eq(User::getDeleteFlag, user.getDeleteFlag());
+        if (queryWrapper.getExpression().getOrderBy().isEmpty()) {
+            queryWrapper.orderByDesc(User::getId);
+        }
+
         return userMapper.selectList(queryWrapper);
     }
 
@@ -53,20 +55,38 @@ public class UserServiceImpl implements IUserService {
             queryWrapper.eq(User::getBirthday, user.getBirthday());
         }
         queryWrapper.eq(User::getDeleteFlag, user.getDeleteFlag());
-        queryWrapper.orderByDesc(User::getName);
+        if (queryWrapper.getExpression().getOrderBy().isEmpty()) {
+            queryWrapper.orderByDesc(User::getId);
+        }
         IPage<User> page = new Page<>(user.getPage(), user.getSize());
         user.setPage(null);
         user.setSize(null);
         return userMapper.selectPage(page, queryWrapper);
     }
 
+    private ReqResult checkName(User user) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getName, user.getName());
+        List<User> users = userMapper.selectList(queryWrapper);
+        if (users.size() == 0) {
+            return ReqResult.success();
+        }
+        if (user.getId() == null) {
+            return ReqResult.fail("名称已存在");
+        }
+        for (User user1 : users) {
+            if (!user.getId().equals(user1.getId())) {
+                return ReqResult.fail("名称已存在");
+            }
+        }
+        return ReqResult.success();
+    }
+
     @Override
     public ReqResult insert(User user) {
-        Wrapper<User> queryWrapper = new QueryWrapper<>(user);
-        queryWrapper.getEntity().setName(user.getName());
-        int count = userMapper.selectCount(queryWrapper);
-        if (count > 0) {
-            return ReqResult.fail("已存在");
+        ReqResult check = checkName(user);
+        if (!check.getSuccess()) {
+            return check;
         }
         user.setCreateTime(LocalDateTime.now());
         user.setDeleteFlag(false);
@@ -79,6 +99,10 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ReqResult update(User user) {
+        ReqResult check = checkName(user);
+        if (!check.getSuccess()) {
+            return check;
+        }
         userMapper.updateById(user);
         ReqResult result = ReqResult.success();
         result.setId(user.getId());
