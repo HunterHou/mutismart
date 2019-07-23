@@ -1,24 +1,25 @@
 package com.hd.mutismart.base.result;
 
-import lombok.Data;
-
 import java.util.List;
+
+import lombok.Data;
 
 /**
  * @author hunter
  */
 @Data
 public class ReqResult {
-    private Long id;
-    private List<Long> ids;
-    private String code;
-    private String message;
-    private Object data;
 
-    public ReqResult() {
+    private Long       id;
+    private List<Long> ids;
+    private String     code;
+    private String     message;
+    private Object     data;
+
+    public ReqResult(){
     }
 
-    public ReqResult(MessageCode messageCode) {
+    public ReqResult(MessageCode messageCode){
         this.code = messageCode.getCode();
         this.message = messageCode.getMessage();
     }
