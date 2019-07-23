@@ -24,6 +24,11 @@ public class UserController {
         return userService.insert(user);
     }
 
+    @RequestMapping("user/update")
+    public ReqResult update(User user) {
+        return userService.update(user);
+    }
+
     @RequestMapping("user/delete")
     public ReqResult delete(User user) {
 
