@@ -1,5 +1,13 @@
 package com.hd.mutismart.service.service.impl;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -7,12 +15,6 @@ import com.hd.mutismart.base.result.ReqResult;
 import com.hd.mutismart.service.entity.User;
 import com.hd.mutismart.service.mapper.UserMapper;
 import com.hd.mutismart.service.service.IUserService;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -22,6 +24,9 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public List<User> query(User user) {
+        if (user == null) {
+            user = new User();
+        }
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(user.getName())) {
             queryWrapper.like(User::getName, user.getName());

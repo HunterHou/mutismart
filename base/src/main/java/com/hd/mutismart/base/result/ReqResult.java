@@ -40,4 +40,8 @@ public class ReqResult {
         return reqResult;
     }
 
+    @Override
+    public String toString() {
+        return "ReqResult{" + "success=" + success + ", code='" + code + '\'' + ", message='" + message + '\'' + '}';
+    }
 }
