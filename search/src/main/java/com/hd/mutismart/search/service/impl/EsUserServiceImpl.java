@@ -114,9 +114,7 @@ public class EsUserServiceImpl implements IEsUserService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ReqResult result = ReqResult.success();
-        result.setData(esUsers);
-        return result;
+        return ReqResult.success(esUsers);
     }
 
     @Override

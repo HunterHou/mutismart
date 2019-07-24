@@ -5,6 +5,8 @@ import java.util.List;
 import lombok.Data;
 
 /**
+ * 通用返回参数
+ * 
  * @author hunter
  */
 @Data
@@ -30,14 +32,44 @@ public class ReqResult {
         return new ReqResult(MessageCode.SUCCESS);
     }
 
+    public static ReqResult success(List<Long> ids) {
+        return ReqResult.success().setIds(ids);
+    }
+
+    public static ReqResult success(Object data) {
+        return ReqResult.success().setData(data);
+    }
+
+    public static ReqResult success(Long id, Object data) {
+        return ReqResult.success().setData(data).setId(id);
+    }
+
     public static ReqResult fail() {
         return new ReqResult(MessageCode.FAIL);
     }
 
     public static ReqResult fail(String message) {
-        ReqResult reqResult = ReqResult.fail();
-        reqResult.setMessage(message);
-        return reqResult;
+        return ReqResult.fail().setMessage(message);
+    }
+
+    public ReqResult setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public ReqResult setIds(List<Long> ids) {
+        this.ids = ids;
+        return this;
+    }
+
+    public ReqResult setData(Object data) {
+        this.data = data;
+        return this;
+    }
+
+    public ReqResult setMessage(String message) {
+        this.message = message;
+        return this;
     }
 
     @Override

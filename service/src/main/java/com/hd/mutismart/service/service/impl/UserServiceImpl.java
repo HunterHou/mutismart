@@ -94,10 +94,7 @@ public class UserServiceImpl implements IUserService {
         user.setCreateTime(LocalDateTime.now());
         user.setDeleteFlag(false);
         userMapper.insert(user);
-        ReqResult result = ReqResult.success();
-        result.setId(user.getId());
-        result.setData(user);
-        return result;
+        return ReqResult.success(user.getId(), user);
     }
 
     @Override
@@ -107,10 +104,7 @@ public class UserServiceImpl implements IUserService {
             return check;
         }
         userMapper.updateById(user);
-        ReqResult result = ReqResult.success();
-        result.setId(user.getId());
-        result.setData(user);
-        return result;
+        return ReqResult.success(user.getId(), user);
     }
 
     @Override
@@ -118,17 +112,13 @@ public class UserServiceImpl implements IUserService {
         user.setDeleteFlag(true);
         user.setDeleteTime(LocalDateTime.now());
         userMapper.updateById(user);
-        ReqResult result = ReqResult.success();
-        result.setData(user);
-        return result;
+        return ReqResult.success(user.getId(), user);
     }
 
     @Override
     public ReqResult delete(List<Long> ids) {
         userMapper.deleteBatchIds(ids);
-        ReqResult result = ReqResult.success();
-        result.setIds(ids);
-        return result;
+        return ReqResult.success(ids);
     }
 
 }
