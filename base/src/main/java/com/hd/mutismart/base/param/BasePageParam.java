@@ -16,4 +16,12 @@ public class BasePageParam<T> implements Serializable {
     Integer page;
     @TableField(exist = false)
     Integer size;
+
+    public BasePageParam(){
+    }
+
+    public BasePageParam(Integer page, Integer size){
+        this.page = page;
+        this.size = size;
+    }
 }
