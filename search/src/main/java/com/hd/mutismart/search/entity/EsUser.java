@@ -13,6 +13,8 @@ import lombok.ToString;
 @ToString
 public class EsUser extends User {
 
+    public static String indexType="user";
+
     @Override
     public String toString() {
         return new ToStringBuilder(this).append("id",

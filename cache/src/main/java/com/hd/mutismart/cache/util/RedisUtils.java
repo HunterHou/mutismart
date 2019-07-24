@@ -1,14 +1,13 @@
 package com.hd.mutismart.cache.util;
 
-import java.util.List;
-
+import com.alibaba.fastjson.JSON;
+import com.hd.mutismart.base.result.ReqResult;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import com.alibaba.fastjson.JSON;
-import com.hd.mutismart.base.result.ReqResult;
+import java.util.List;
 
 @Component
 public class RedisUtils {
@@ -16,8 +15,8 @@ public class RedisUtils {
     private static StringRedisTemplate redisTemplate;
 
     @Autowired
-    public RedisUtils(StringRedisTemplate template){
-        this.redisTemplate = template;
+    public RedisUtils(StringRedisTemplate template) {
+        redisTemplate = template;
     }
 
     public static <T> ReqResult setValue(String name, T value) {
