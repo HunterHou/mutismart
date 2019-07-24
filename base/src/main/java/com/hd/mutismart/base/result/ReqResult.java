@@ -30,6 +30,10 @@ public class ReqResult {
         return new ReqResult(MessageCode.SUCCESS);
     }
 
+    public static ReqResult success(Object data) {
+        return new ReqResult(MessageCode.SUCCESS).setData(data);
+    }
+
     public static ReqResult fail() {
         return new ReqResult(MessageCode.FAIL);
     }
@@ -38,6 +42,11 @@ public class ReqResult {
         ReqResult reqResult = ReqResult.fail();
         reqResult.setMessage(message);
         return reqResult;
+    }
+
+    public ReqResult setData(Object data) {
+        this.data = data;
+        return this;
     }
 
     @Override
