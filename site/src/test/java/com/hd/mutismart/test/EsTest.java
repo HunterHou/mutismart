@@ -1,5 +1,7 @@
 package com.hd.mutismart.test;
 
+import java.util.ArrayList;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -31,6 +33,8 @@ public class EsTest {
         user.setSize(5);
         ReqResult users = esUserService.search(user);
         System.out.println(users.toString());
+        ArrayList<EsUser> usersList = (ArrayList<EsUser>) users.getData();
+        usersList.forEach(System.out::println);
     }
 
     @Test
