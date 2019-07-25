@@ -11,14 +11,14 @@
     <description>Demo project for Spring Boot</description>
 
     <modules>
-        <module>service</module>
+        <module>smart-service</module>
         <module>site</module>
-        <module>search</module>
-        <module>cache</module>
-        <module>base</module>
-        <module>common</module>
+        <module>smart-search</module>
+        <module>smart-cache</module>
+        <module>smart-base</module>
+        <module>smart-common</module>
         <module>code-generator</module>
-        <module>mail</module>
+        <module>smart-mail</module>
     </modules>
 
     <parent>
