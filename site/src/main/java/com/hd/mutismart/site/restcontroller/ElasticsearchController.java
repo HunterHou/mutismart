@@ -1,13 +1,14 @@
-package com.hd.mutismart.site.controller;
+package com.hd.mutismart.site.restcontroller;
+
+import javax.annotation.Resource;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.hd.mutismart.base.annotation.Log;
 import com.hd.mutismart.base.result.ReqResult;
 import com.hd.mutismart.search.entity.EsUser;
 import com.hd.mutismart.search.service.IEsUserService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 /**
  * @author hunter
