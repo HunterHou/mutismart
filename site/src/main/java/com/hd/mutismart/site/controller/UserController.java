@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hd.mutismart.base.annotation.Log;
 import com.hd.mutismart.base.result.MessageCode;
 import com.hd.mutismart.base.result.ReqResult;
 import com.hd.mutismart.service.entity.User;
@@ -31,11 +32,11 @@ public class UserController {
 
     @RequestMapping("user/delete")
     public ReqResult delete(User user) {
-
         return userService.delete(user);
     }
 
     @RequestMapping("user/all")
+    @Log("用户查询")
     public ReqResult selectList(User user) {
         ReqResult reqResult = new ReqResult(MessageCode.SUCCESS);
         reqResult.setData(userService.query(user));

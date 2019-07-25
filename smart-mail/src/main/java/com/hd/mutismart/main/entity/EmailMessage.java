@@ -10,6 +10,6 @@ public class EmailMessage {
 
     private String from;
     private String to;
-    private String title;
-    private String context;
+    private String subject;
+    private String text;
 }
