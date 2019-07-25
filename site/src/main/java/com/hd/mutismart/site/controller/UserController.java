@@ -1,17 +1,15 @@
 package com.hd.mutismart.site.controller;
 
-import javax.annotation.Resource;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.hd.mutismart.base.annotation.Log;
 import com.hd.mutismart.base.result.MessageCode;
 import com.hd.mutismart.base.result.ReqResult;
 import com.hd.mutismart.service.entity.User;
 import com.hd.mutismart.service.service.IUserService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 @RestController
 @Slf4j

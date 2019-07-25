@@ -1,11 +1,13 @@
 package com.hd.mutismart.search.service.impl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Resource;
-
+import com.alibaba.fastjson.JSON;
+import com.hd.mutismart.base.result.ReqResult;
+import com.hd.mutismart.search.entity.EsUser;
+import com.hd.mutismart.search.service.IEsUserService;
+import com.hd.mutismart.search.utils.UserConvert;
+import com.hd.mutismart.service.entity.User;
+import com.hd.mutismart.service.service.IUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.delete.DeleteRequest;
@@ -25,15 +27,10 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
-import com.hd.mutismart.base.result.ReqResult;
-import com.hd.mutismart.search.entity.EsUser;
-import com.hd.mutismart.search.service.IEsUserService;
-import com.hd.mutismart.search.utils.UserConvert;
-import com.hd.mutismart.service.entity.User;
-import com.hd.mutismart.service.service.IUserService;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Resource;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j

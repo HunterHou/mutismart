@@ -1,9 +1,9 @@
 package com.hd.mutismart.search.service;
 
-import java.util.List;
-
 import com.hd.mutismart.base.result.ReqResult;
 import com.hd.mutismart.search.entity.EsUser;
+
+import java.util.List;
 
 public interface IEsUserService {
     ReqResult save(EsUser user);

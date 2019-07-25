@@ -1,27 +1,24 @@
 package com.hd.mutismart.main.service.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
+import com.hd.mutismart.base.result.ReqResult;
+import com.hd.mutismart.main.entity.EmailMessage;
+import com.hd.mutismart.main.service.IEmailService;
+import freemarker.template.Configuration;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-import com.hd.mutismart.base.result.ReqResult;
-import com.hd.mutismart.main.entity.EmailMessage;
-import com.hd.mutismart.main.service.IEmailService;
-
-import freemarker.template.Configuration;
-import freemarker.template.TemplateException;
-import freemarker.template.TemplateNotFoundException;
+import javax.annotation.Resource;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class EmailServiceImpl implements IEmailService {

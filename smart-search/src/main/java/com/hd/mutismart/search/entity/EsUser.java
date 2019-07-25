@@ -1,11 +1,9 @@
 package com.hd.mutismart.search.entity;
 
+import com.hd.mutismart.service.entity.User;
+import lombok.Data;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.data.elasticsearch.annotations.Document;
-
-import com.hd.mutismart.service.entity.User;
-
-import lombok.Data;
 
 @Document(indexName = "mutiSmart", type = "user")
 @Data

@@ -1,8 +1,6 @@
 package com.hd.mutismart.search.config;
 
-import java.util.Arrays;
-import java.util.Objects;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
@@ -13,7 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Arrays;
+import java.util.Objects;
 
 @Configuration
 @Slf4j

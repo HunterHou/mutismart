@@ -1,8 +1,8 @@
 package com.hd.mutismart.base.result;
 
-import java.util.List;
-
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * 通用返回参数

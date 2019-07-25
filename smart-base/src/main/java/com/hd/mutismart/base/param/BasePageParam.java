@@ -1,10 +1,9 @@
 package com.hd.mutismart.base.param;
 
-import java.io.Serializable;
-
 import com.baomidou.mybatisplus.annotation.TableField;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author hunter

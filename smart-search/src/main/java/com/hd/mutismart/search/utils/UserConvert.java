@@ -1,12 +1,11 @@
 package com.hd.mutismart.search.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.BeanUtils;
-
 import com.hd.mutismart.search.entity.EsUser;
 import com.hd.mutismart.service.entity.User;
+import org.springframework.beans.BeanUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserConvert {
 
