@@ -1,8 +1,8 @@
 package com.hd.mutismart.base.result;
 
-import lombok.Data;
-
 import java.util.List;
+
+import lombok.Data;
 
 /**
  * 通用返回参数
@@ -10,14 +10,14 @@ import java.util.List;
  * @author hunter
  */
 @Data
-public class ReqResult {
+public class ReqResult<T> {
 
     private Boolean    success = true;
     private Long       id;
     private List<Long> ids;
-    private String     code;
+    private Integer    code;
     private String     message;
-    private Object     data;
+    private T          data;
 
     public ReqResult(){
     }
@@ -62,7 +62,7 @@ public class ReqResult {
         return this;
     }
 
-    public ReqResult setData(Object data) {
+    public ReqResult setData(T data) {
         this.data = data;
         return this;
     }
