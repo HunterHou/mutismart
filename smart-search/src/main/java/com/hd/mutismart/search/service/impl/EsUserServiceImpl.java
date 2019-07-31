@@ -21,6 +21,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Service;
@@ -112,7 +113,10 @@ public class EsUserServiceImpl implements IEsUserService {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
         if (StringUtils.isNotBlank(user.getName())) {
-            queryBuilder.must(QueryBuilders.termQuery("name", user.getName()));
+            QueryStringQueryBuilder queryStringQueryBuilder = QueryBuilders.queryStringQuery(user.getName());
+            queryStringQueryBuilder.queryName("name");
+            queryStringQueryBuilder.analyzeWildcard(true);
+            queryBuilder.must(queryStringQueryBuilder);
         }
         searchSourceBuilder.query(queryBuilder);
         searchSourceBuilder.from((user.getPage() >= 1 ? (user.getPage() - 1) : 0) * user.getSize());
