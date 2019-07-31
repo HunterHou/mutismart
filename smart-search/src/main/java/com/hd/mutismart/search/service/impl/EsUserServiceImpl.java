@@ -1,14 +1,13 @@
 package com.hd.mutismart.search.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.hd.mutismart.base.result.ReqResult;
-import com.hd.mutismart.search.entity.EsUser;
-import com.hd.mutismart.search.service.IEsUserService;
-import com.hd.mutismart.search.utils.UserConvert;
-import com.hd.mutismart.service.entity.User;
-import com.hd.mutismart.service.service.IUserService;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.index.IndexRequest;
@@ -19,7 +18,6 @@ import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -27,10 +25,15 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.alibaba.fastjson.JSON;
+import com.hd.mutismart.base.result.ReqResult;
+import com.hd.mutismart.search.entity.EsUser;
+import com.hd.mutismart.search.service.IEsUserService;
+import com.hd.mutismart.search.utils.UserConvert;
+import com.hd.mutismart.service.entity.User;
+import com.hd.mutismart.service.service.IUserService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
@@ -109,7 +112,7 @@ public class EsUserServiceImpl implements IEsUserService {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
         if (StringUtils.isNotBlank(user.getName())) {
-            queryBuilder.must(QueryBuilders.matchQuery("name", user.getName()).fuzziness(Fuzziness.AUTO));
+            queryBuilder.must(QueryBuilders.termQuery("name", user.getName()));
         }
         searchSourceBuilder.query(queryBuilder);
         searchSourceBuilder.from((user.getPage() >= 1 ? (user.getPage() - 1) : 0) * user.getSize());
@@ -125,14 +128,20 @@ public class EsUserServiceImpl implements IEsUserService {
                 esUsers.add(esUser);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("搜索User", e);
         }
         return ReqResult.success(esUsers);
     }
 
     @Override
     public ReqResult clear() {
-        // esUserMapper.deleteAll();
+
+        try {
+            DeleteIndexRequest deleteRequest = new DeleteIndexRequest("mutismart");
+            restClientBuilder.indices().delete(deleteRequest, RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            log.error("清空User", e);
+        }
         return ReqResult.success();
     }
 

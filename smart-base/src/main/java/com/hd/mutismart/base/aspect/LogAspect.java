@@ -1,7 +1,15 @@
 package com.hd.mutismart.base.aspect;
 
-import com.hd.mutismart.base.annotation.Log;
-import lombok.extern.slf4j.Slf4j;
+import java.lang.reflect.Method;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -15,14 +23,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
+import com.hd.mutismart.base.annotation.Log;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Aspect
@@ -63,7 +66,7 @@ public class LogAspect {
         Method method = methodSign.getMethod();
         // 判断是否包含了 无需记录日志的方法
         Log logAnno = AnnotationUtils.getAnnotation(method, Log.class);
-        if (logAnno != null && logAnno.ignore()) {
+        if (logAnno == null || logAnno.ignore()) {
             return object;
         }
         if (StringUtils.isNotBlank(logAnno.desc())) {
