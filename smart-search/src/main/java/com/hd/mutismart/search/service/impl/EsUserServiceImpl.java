@@ -7,7 +7,9 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.index.IndexRequest;
@@ -30,6 +32,7 @@ import com.alibaba.fastjson.JSON;
 import com.hd.mutismart.base.result.ReqResult;
 import com.hd.mutismart.search.entity.EsUser;
 import com.hd.mutismart.search.service.IEsUserService;
+import com.hd.mutismart.search.utils.ReadJSON;
 import com.hd.mutismart.search.utils.UserConvert;
 import com.hd.mutismart.service.entity.User;
 import com.hd.mutismart.service.service.IUserService;
@@ -47,15 +50,24 @@ public class EsUserServiceImpl implements IEsUserService {
 
     private static final String MUTISMART = "mutismart";
 
-    private void createIndex() throws IOException {
+    private void createIndex(boolean isCreate, boolean isClear) throws IOException {
 
-        // String mapping = 读取setting.json的字符串;
-        // String settings = 读取mapping.json的字符串;
-        //
-        // CreateIndexRequest createIndex = new CreateIndexRequest(MUTISMART);
-        // createIndex.settings(settings,"json");
-        // createIndex.mapping(mapping);
-        // restClientBuilder.indices().create(createIndex, RequestOptions.DEFAULT);
+        if (isClear) {
+            GetIndexRequest exists = new GetIndexRequest();
+            exists.indices(MUTISMART);
+            boolean res = restClientBuilder.indices().exists(exists, RequestOptions.DEFAULT);
+            if (res) {
+                this.clear();
+            }
+        }
+        if (isCreate) {
+            String mapping = ReadJSON.readFromJson("mapping.json");
+            String settings = ReadJSON.readFromJson("setting.json");
+            CreateIndexRequest createIndex = new CreateIndexRequest(MUTISMART);
+            // createIndex.settings(set);
+            createIndex.mapping(EsUser.indexType, mapping);
+            restClientBuilder.indices().create(createIndex, RequestOptions.DEFAULT);
+        }
     }
 
     @Override
@@ -63,6 +75,7 @@ public class EsUserServiceImpl implements IEsUserService {
 
         IndexRequest indexRequest = new IndexRequest(MUTISMART, EsUser.indexType, user.getId().toString());
         try {
+
             indexRequest.source(JSON.toJSONString(user), XContentType.JSON);
             IndexResponse response = restClientBuilder.index(indexRequest, RequestOptions.DEFAULT);
         } catch (IOException e) {
@@ -77,6 +90,7 @@ public class EsUserServiceImpl implements IEsUserService {
     public ReqResult save(List<EsUser> users) {
         BulkRequest bulkRequest = new BulkRequest();
         try {
+
             for (EsUser esUser : users) {
                 IndexRequest indexRequest = new IndexRequest(MUTISMART, EsUser.indexType, esUser.getId().toString());
                 indexRequest.source(JSON.toJSONString(esUser), XContentType.JSON);
@@ -164,7 +178,13 @@ public class EsUserServiceImpl implements IEsUserService {
 
     @Override
     public ReqResult sync() {
+
         List<User> users = userService.query(null);
+        try {
+            createIndex(true, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.save(UserConvert.convert(users));
         return ReqResult.success();
     }

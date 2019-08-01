@@ -34,7 +34,7 @@
         },
         "by_sfr": {
           "type": "synonym",
-          "synonyms_path": "synonyms.txt"
+          "synonyms_path": "analysis/synonyms.txt"
         }
       },
       "char_filter": {

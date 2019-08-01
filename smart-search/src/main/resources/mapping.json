@@ -1,6 +1,6 @@
 {
   "properties": {
-    "title": {
+    "name": {
       "type": "text",
       "index": "analyzed",
       "analyzer": "by_max_word",

@@ -27,7 +27,7 @@ public class EsUser extends BasePageParam {
     private Long          id;
     @ApiModelProperty(value = "名称", dataType = "String", name = "name", example = "001")
     @NotBlank(message = "名称不能为空")
-    @Field(analyzer = "not_analyzed", searchAnalyzer = "ik_smart")
+    @Field(analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String        name;
     private Boolean       deleteFlag = false;
     @ApiModelProperty(value = "生日", dataType = "Date", name = "birthday", example = "")
