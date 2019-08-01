@@ -45,10 +45,23 @@ public class EsUserServiceImpl implements IEsUserService {
     @Resource(name = "highLevelClient")
     private RestHighLevelClient restClientBuilder;
 
+    private static final String MUTISMART = "mutismart";
+
+    private void createIndex() throws IOException {
+
+        // String mapping = 读取setting.json的字符串;
+        // String settings = 读取mapping.json的字符串;
+        //
+        // CreateIndexRequest createIndex = new CreateIndexRequest(MUTISMART);
+        // createIndex.settings(settings,"json");
+        // createIndex.mapping(mapping);
+        // restClientBuilder.indices().create(createIndex, RequestOptions.DEFAULT);
+    }
+
     @Override
     public ReqResult save(EsUser user) {
 
-        IndexRequest indexRequest = new IndexRequest("mutismart", EsUser.indexType, user.getId().toString());
+        IndexRequest indexRequest = new IndexRequest(MUTISMART, EsUser.indexType, user.getId().toString());
         try {
             indexRequest.source(JSON.toJSONString(user), XContentType.JSON);
             IndexResponse response = restClientBuilder.index(indexRequest, RequestOptions.DEFAULT);
@@ -65,7 +78,7 @@ public class EsUserServiceImpl implements IEsUserService {
         BulkRequest bulkRequest = new BulkRequest();
         try {
             for (EsUser esUser : users) {
-                IndexRequest indexRequest = new IndexRequest("mutismart", EsUser.indexType, esUser.getId().toString());
+                IndexRequest indexRequest = new IndexRequest(MUTISMART, EsUser.indexType, esUser.getId().toString());
                 indexRequest.source(JSON.toJSONString(esUser), XContentType.JSON);
                 bulkRequest.add(indexRequest);
             }
@@ -80,7 +93,7 @@ public class EsUserServiceImpl implements IEsUserService {
 
     @Override
     public ReqResult update(EsUser user) {
-        UpdateRequest updateRequest = new UpdateRequest("mutismart", EsUser.indexType, user.getId().toString());
+        UpdateRequest updateRequest = new UpdateRequest(MUTISMART, EsUser.indexType, user.getId().toString());
         try {
             updateRequest.doc(JSON.toJSONString(user));
             UpdateResponse response = restClientBuilder.update(updateRequest, RequestOptions.DEFAULT);
@@ -94,7 +107,7 @@ public class EsUserServiceImpl implements IEsUserService {
 
     @Override
     public ReqResult delete(EsUser user) {
-        DeleteRequest deleteRequest = new DeleteRequest("mutismart");
+        DeleteRequest deleteRequest = new DeleteRequest(MUTISMART);
         deleteRequest.type(EsUser.indexType);
         deleteRequest.id(user.getId().toString());
         try {
@@ -115,7 +128,7 @@ public class EsUserServiceImpl implements IEsUserService {
         if (StringUtils.isNotBlank(user.getName())) {
             QueryStringQueryBuilder queryStringQueryBuilder = QueryBuilders.queryStringQuery(user.getName());
             queryStringQueryBuilder.queryName("name");
-            queryStringQueryBuilder.analyzeWildcard(true);
+            queryStringQueryBuilder.analyzer("ik_max_word");
             queryBuilder.must(queryStringQueryBuilder);
         }
         searchSourceBuilder.query(queryBuilder);
@@ -124,7 +137,7 @@ public class EsUserServiceImpl implements IEsUserService {
         List<EsUser> esUsers = new ArrayList<>();
         try {
             SearchRequest searchRequest = new SearchRequest();
-            searchRequest.indices("mutismart");
+            searchRequest.indices(MUTISMART);
             searchRequest.source(searchSourceBuilder);
             SearchResponse searchResponse = restClientBuilder.search(searchRequest, RequestOptions.DEFAULT);
             for (SearchHit searchHit : searchResponse.getHits().getHits()) {
@@ -141,7 +154,7 @@ public class EsUserServiceImpl implements IEsUserService {
     public ReqResult clear() {
 
         try {
-            DeleteIndexRequest deleteRequest = new DeleteIndexRequest("mutismart");
+            DeleteIndexRequest deleteRequest = new DeleteIndexRequest(MUTISMART);
             restClientBuilder.indices().delete(deleteRequest, RequestOptions.DEFAULT);
         } catch (IOException e) {
             log.error("清空User", e);
